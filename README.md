@@ -4,7 +4,7 @@
 
 Read the designed edition at **[https://indo1919.github.io/whats-left/](https://indo1919.github.io/whats-left/)**.
 
-A collection by Matias Indacochea for Project 3 of the Visual Culture Seminar, Parsons School of Design, fall 2026. Each selection lives in its own file in [`collection/`](collection/) and was added in its own commit, so the [commit history](https://github.com/Indo1919/whats-left/commits/main) is a record of every choice.
+A collection by Matias Indacochea for Project 3 of the Visual Culture Seminar, Parsons School of Design, fall 2026. Each selection lives in its own file in [`collection/`](collection/) and was added in its own commit, so the [commit history](https://github.com/Indo1919/whats-left/commits/main) is a record of every choice. The counts behind the charts are in [`data/`](data/).
 
 ## Framing essay
 

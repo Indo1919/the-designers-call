@@ -1,0 +1,64 @@
+{
+ "numbers": {
+  "ai_early": 5,
+  "n_early": 163,
+  "ai_late": 50,
+  "n_late": 144,
+  "taste": 5,
+  "choice": 57,
+  "essay13": 60,
+  "n13": 64,
+  "launch67": 34,
+  "n67": 38,
+  "ai910": 27,
+  "n910": 29,
+  "sourced": 175,
+  "excerpts": 191,
+  "responses": 166,
+  "repeated": 60,
+  "kinds": {
+   "essay": 76,
+   "explainer": 34,
+   "launch": 37,
+   "ai": 28,
+   "own": 16
+  }
+ },
+ "passages": [
+  {
+   "k": "butler",
+   "n": 4,
+   "text": "They may be too slight to matter or they may be worth the risk because the potential benefits are great"
+  },
+  {
+   "k": "hara",
+   "n": 4,
+   "text": "The sensibility that allows one to rediscover the unknown in the familiar is equally creative"
+  },
+  {
+   "k": "hall",
+   "n": 4,
+   "text": "Design is the application of intention, and you are only as intentional as you are informed"
+  },
+  {
+   "k": "martens",
+   "n": 3,
+   "text": "…the designer should see the import of the job and be alert to those to whom it is directed, to come to the right choices"
+  },
+  {
+   "k": "yu",
+   "n": 3,
+   "text": "The Japanese user often measures convenience by the amount of inconvenience they avoid causing to others"
+  },
+  {
+   "k": "hara2",
+   "n": 3,
+   "text": "Design is the energetic acknowledgment of our own living world through the making of things and through communication"
+  },
+  {
+   "k": "butler2",
+   "n": 3,
+   "text": "In the future, we will have more and more of whatever’s holding our attention right now"
+  }
+ ]
+}
