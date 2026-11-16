@@ -58,44 +58,39 @@
  "clusters": 42,
  "top": [
   {
+   "k": "butler",
    "n": 4,
-   "src": "Octavia E. Butler, “A Few Rules for Predicting the Future”",
-   "passage": "They may be too slight to matter or they may be worth the risk because the potential benefits are great"
+   "text": "They may be too slight to matter or they may be worth the risk because the potential benefits are great"
   },
   {
+   "k": "hara",
    "n": 4,
-   "src": "Kenya Hara, “What Is Design?”",
-   "passage": "The sensibility that allows one to rediscover the unknown in the familiar is equally creative"
+   "text": "The sensibility that allows one to rediscover the unknown in the familiar is equally creative"
   },
   {
+   "k": "hall",
    "n": 4,
-   "src": "Erika Hall, “A Design Research Framework”",
-   "passage": "Design is the application of intention and you are only as intentional as you are informed"
+   "text": "Design is the application of intention, and you are only as intentional as you are informed"
   },
   {
+   "k": "martens",
    "n": 3,
-   "src": "Octavia E. Butler, “A Few Rules for Predicting the Future”",
-   "passage": "Because most of all our tomorrow is the child of our today Through thought and deed we exert a great deal of influence over this child even though we can’t control it absolutely Best to think about it though Best to try to shape it into something good Best to do that for any child"
+   "text": "…the designer should see the import of the job and be alert to those to whom it is directed, to come to the right choices"
   },
   {
+   "k": "yu",
    "n": 3,
-   "src": "Octavia E. Butler, “A Few Rules for Predicting the Future”",
-   "passage": "use our past and present behaviors as guides to the kind of world we seem to be creating The past for example is filled with repeating cycles of strength and weakness wisdom and stupidity empire and ashes"
+   "text": "The Japanese user often measures convenience by the amount of inconvenience they avoid causing to others"
   },
   {
+   "k": "hara2",
    "n": 3,
-   "src": "Octavia E. Butler, “A Few Rules for Predicting the Future”",
-   "passage": "In fact I don’t believe we can do anything at all without side effects also known as unintended consequences Those consequences may be beneficial or harmful They may be too slight to matter"
+   "text": "Design is the energetic acknowledgment of our own living world through the making of things and through communication"
   },
   {
+   "k": "butler2",
    "n": 3,
-   "src": "Phoebe Yu, “Japanese Web Design” (video explainer)",
-   "passage": "The Japanese user often measures convenience by the amount of inconvenience they avoid causing to others rather than solely the time or effort saved for themselves"
-  },
-  {
-   "n": 3,
-   "src": "Kenya Hara, “What Is Design?”",
-   "passage": "the designer should see the import of the job and be alert to those to whom it is directed to come to the right choices"
+   "text": "In the future, we will have more and more of whatever’s holding our attention right now"
   }
  ],
  "sources": [
@@ -247,5 +242,6 @@
    "Priyanka Desai, “My AI Agent Is Making Me Lamer”",
    1
   ]
- ]
+ ],
+ "note": "Counts of before-class excerpts by source kind and week. 'top' lists hand-checked passages and the number of distinct classmates who chose each."
 }
