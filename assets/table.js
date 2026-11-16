@@ -579,7 +579,7 @@ function sit(name, { instant = false } = {}) {
   if (current && current !== s) showPerson(current, true);
   current = s;
   look.yaw = look.yawT = 0;
-  look.pitch = look.pitchT = isNarrow() ? (s.side === "F" ? -0.04 : -0.13) : (s.side === "F" ? -0.16 : -0.42);
+  look.pitch = look.pitchT = isNarrow() ? (s.side === "F" ? -0.04 : -0.13) : (s.side === "F" ? -0.12 : -0.3);
   shiftT = 1;
   const fov = isNarrow() ? 64 : 58;
   const target = seatLookTarget(s, 0, look.pitch);
