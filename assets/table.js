@@ -263,7 +263,7 @@ screenFrame.position.set(-6.885, 2.05, 0); scene.add(screenFrame);
   s.lineTo(L / 2, W / 2 - r); s.quadraticCurveTo(L / 2, W / 2, L / 2 - r, W / 2); s.lineTo(-L / 2 + r, W / 2);
   s.quadraticCurveTo(-L / 2, W / 2, -L / 2, W / 2 - r); s.lineTo(-L / 2, -W / 2 + r); s.quadraticCurveTo(-L / 2, -W / 2, -L / 2 + r, -W / 2);
   const geo = new THREE.ExtrudeGeometry(s, { depth: TABLE.T, bevelEnabled: true, bevelThickness: 0.007, bevelSize: 0.008, bevelSegments: 3, curveSegments: 18 });
-  geo.rotateX(Math.PI / 2); geo.translate(0, TOP_Y, 0);
+  geo.rotateX(Math.PI / 2); geo.translate(0, TOP_Y - 0.007, 0);   // the bevel rises 7mm; keep the surface at TOP_Y
   const wood = woodTexture(); wood.wrapS = wood.wrapT = THREE.RepeatWrapping; wood.repeat.set(1 / L, 1 / W); wood.offset.set(0.5, 0.5);
   const top = new THREE.Mesh(geo, env(new THREE.MeshStandardMaterial({ map: wood, roughness: 0.42, metalness: 0.0 }), 0.6));
   top.castShadow = true; top.receiveShadow = true; scene.add(top);
