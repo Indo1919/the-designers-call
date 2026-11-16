@@ -2,7 +2,7 @@
  "numbers": {
   "ai_early": 5,
   "n_early": 163,
-  "ai_late": 50,
+  "ai_late": 52,
   "n_late": 144,
   "taste": 5,
   "choice": 57,
@@ -15,15 +15,80 @@
   "sourced": 175,
   "excerpts": 191,
   "responses": 166,
-  "repeated": 60,
-  "kinds": {
-   "essay": 76,
-   "explainer": 34,
-   "launch": 37,
-   "ai": 28,
-   "own": 16
-  }
+  "repeated": 60
  },
+ "weeks": [
+  {
+   "w": 1,
+   "total": 43,
+   "ai": 1,
+   "ex": 21,
+   "chosen": 0
+  },
+  {
+   "w": 2,
+   "total": 42,
+   "ai": 3,
+   "ex": 23,
+   "chosen": 6
+  },
+  {
+   "w": 3,
+   "total": 38,
+   "ai": 1,
+   "ex": 20,
+   "chosen": 0
+  },
+  {
+   "w": 4,
+   "total": 40,
+   "ai": 0,
+   "ex": 21,
+   "chosen": 1
+  },
+  {
+   "w": 5,
+   "total": 40,
+   "ai": 6,
+   "ex": 21,
+   "chosen": 2
+  },
+  {
+   "w": 6,
+   "total": 38,
+   "ai": 12,
+   "ex": 20,
+   "chosen": 7
+  },
+  {
+   "w": 7,
+   "total": 36,
+   "ai": 14,
+   "ex": 18,
+   "chosen": 0
+  },
+  {
+   "w": 8,
+   "total": 34,
+   "ai": 9,
+   "ex": 18,
+   "chosen": 0
+  },
+  {
+   "w": 9,
+   "total": 36,
+   "ai": 17,
+   "ex": 19,
+   "chosen": 12
+  },
+  {
+   "w": 10,
+   "total": 10,
+   "ai": 4,
+   "ex": 10,
+   "chosen": 2
+  }
+ ],
  "passages": [
   {
    "k": "butler",
@@ -59,6 +124,89 @@
    "k": "butler2",
    "n": 3,
    "text": "In the future, we will have more and more of whatever’s holding our attention right now"
+  }
+ ],
+ "readings": [
+  {
+   "key": "Martens",
+   "author": "Karel Martens",
+   "title": "What Design Means for Me",
+   "pub": "Printed Matter, 1996",
+   "ids": [
+    "01",
+    "03"
+   ],
+   "classmates": 9,
+   "excerpts": 9,
+   "cite": "Martens, Karel. “What Design Means for Me.” 1990. In Printed Matter / Drukwerk, edited by Robin Kinross, Jaap van Triest, and Karel Martens. London: Hyphen Press, 1996."
+  },
+  {
+   "key": "Hall",
+   "author": "Erika Hall",
+   "title": "A Design Research Framework",
+   "pub": "Mule Design, 2022",
+   "ids": [
+    "04"
+   ],
+   "classmates": 10,
+   "excerpts": 11,
+   "cite": "Hall, Erika. “A Design Research Framework.” Mule Design, October 25, 2022. muledesign.com/blog/design-research-framework."
+  },
+  {
+   "key": "Lialina",
+   "author": "Olia Lialina",
+   "title": "Once Again, The Doorknob",
+   "pub": "Contemporary Home Computing, 2018",
+   "ids": [
+    "05"
+   ],
+   "classmates": 1,
+   "excerpts": 1,
+   "cite": "Lialina, Olia. “Once Again, The Doorknob: On Affordance, Forgiveness and Ambiguity in Human-Computer and Human-Robot Interaction.” Contemporary Home Computing, 2018. contemporary-home-computing.org/affordance."
+  },
+  {
+   "key": "Freiberg",
+   "author": "Rauno Freiberg",
+   "title": "Invisible Details of Interaction Design",
+   "pub": "Every, 2023",
+   "ids": [
+    "08"
+   ],
+   "classmates": 3,
+   "excerpts": 3,
+   "cite": "Freiberg, Rauno. “Invisible Details of Interaction Design.” Every, July 17, 2023. every.to/p/invisible-details-of-interaction-design."
+  },
+  {
+   "key": "Chiang",
+   "author": "Ted Chiang",
+   "title": "Why A.I. Isn’t Going to Make Art",
+   "pub": "The New Yorker, 2024",
+   "ids": [
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "19",
+    "22",
+    "24",
+    "28"
+   ],
+   "classmates": 12,
+   "excerpts": 13,
+   "cite": "Chiang, Ted. “Why A.I. Isn’t Going to Make Art.” The New Yorker, August 31, 2024. newyorker.com."
+  },
+  {
+   "key": "Bridle",
+   "author": "James Bridle",
+   "title": "Ways of Being",
+   "pub": "Farrar, Straus and Giroux, 2022",
+   "ids": [
+    "30"
+   ],
+   "classmates": 4,
+   "excerpts": 4,
+   "cite": "Bridle, James. Ways of Being: Animals, Plants, Machines: The Search for a Planetary Intelligence. New York: Farrar, Straus and Giroux, 2022, 18."
   }
  ]
 }

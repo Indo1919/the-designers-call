@@ -1,0 +1,191 @@
+[
+ {
+  "key": "choosing",
+  "part": "I",
+  "title": "Design is choosing",
+  "question": "What is a designer actually doing?",
+  "reading": "Before AI came up at all, the readings described design as a run of decisions, each one closing off others. The class took that further: choices are never neutral, and how good they are depends on how much you know.",
+  "views": [
+   {
+    "label": "Every choice rules others out",
+    "ids": [
+     "01"
+    ]
+   },
+   {
+    "label": "There is no recipe, only a way of thinking",
+    "ids": [
+     "03"
+    ]
+   },
+   {
+    "label": "You are only as intentional as you are informed",
+    "ids": [
+     "04",
+     "02"
+    ]
+   },
+   {
+    "label": "Knowing the history shows there is a choice",
+    "ids": [
+     "05"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "taste",
+  "part": "I",
+  "title": "What taste is",
+  "question": "If a machine can make the options, what is taste for?",
+  "reading": "The industry line is that AI does the work and designers bring taste. In class, taste turned out to mean something you can explain and test against real people, not a private feeling.",
+  "views": [
+   {
+    "label": "Taste grows by explaining why",
+    "ids": [
+     "08",
+     "09"
+    ]
+   },
+   {
+    "label": "Taste is knowing what helps the user",
+    "ids": [
+     "10"
+    ]
+   },
+   {
+    "label": "Taste is shared, and trust has to be earned",
+    "ids": [
+     "21"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "handoff",
+  "part": "II",
+  "title": "What to hand off",
+  "question": "Which decisions should a designer give away?",
+  "reading": "None of these responses argue for refusing AI. The question is where to draw the line, and most people drew it around the decisions: define the problem, keep the judgment, let the tool execute.",
+  "views": [
+   {
+    "label": "Keep the decisions, use the tool",
+    "ids": [
+     "16",
+     "17"
+    ]
+   },
+   {
+    "label": "Define the problem before the tool",
+    "ids": [
+     "07",
+     "20"
+    ]
+   },
+   {
+    "label": "Knowledge is what directs the tool",
+    "ids": [
+     "18",
+     "06"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "gaps",
+  "part": "II",
+  "title": "What a prompt leaves out",
+  "question": "Who makes the choices a prompt doesn’t?",
+  "reading": "Twelve of the twenty classmates quoted Ted Chiang’s essay, more than any other writing about AI. His point is about quantity: a prompt holds a few choices, a finished piece holds thousands, and the model makes the rest.",
+  "views": [
+   {
+    "label": "Art is made of many choices",
+    "ids": [
+     "12",
+     "13",
+     "14"
+    ]
+   },
+   {
+    "label": "A new medium earns its place through choices",
+    "ids": [
+     "11"
+    ]
+   },
+   {
+    "label": "The model fills in what you skip",
+    "ids": [
+     "15",
+     "19"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "growth",
+  "part": "III",
+  "title": "Growth needs the struggle",
+  "question": "What do we lose when the work gets easy?",
+  "reading": "This is where the argument turns from the work to the person making it. If the hard part is skipped, so is the learning that the hard part produces.",
+  "views": [
+   {
+    "label": "Skipping the work skips the growth",
+    "ids": [
+     "23",
+     "24"
+    ]
+   },
+   {
+    "label": "Working in the medium is the point",
+    "ids": [
+     "22"
+    ]
+   },
+   {
+    "label": "Everyone ends up knowing the same surface",
+    "ids": [
+     "25"
+    ]
+   }
+  ]
+ },
+ {
+  "key": "ours",
+  "part": "III",
+  "title": "What stays ours",
+  "question": "Is the work, and the responsibility for it, still ours?",
+  "reading": "The last weeks asked who owns a result that draws on everyone’s work, and who answers for it. The answers ranged from worry about lost styles to the reminder that people have always remixed.",
+  "views": [
+   {
+    "label": "Distinct styles get absorbed",
+    "ids": [
+     "26"
+    ]
+   },
+   {
+    "label": "People remix too, so where is the line?",
+    "ids": [
+     "27"
+    ]
+   },
+   {
+    "label": "There is less intention in the world",
+    "ids": [
+     "28"
+    ]
+   },
+   {
+    "label": "Responsibility feels far away, but it stays",
+    "ids": [
+     "29"
+    ]
+   },
+   {
+    "label": "Our tools shape us back",
+    "ids": [
+     "30"
+    ]
+   }
+  ]
+ }
+]

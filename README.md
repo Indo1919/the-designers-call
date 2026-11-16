@@ -1,26 +1,14 @@
-# What’s left for the designer?
+# The Designer’s Call
 
 **Taste, choice, and AI in thirty micro-responses, chosen from 357 written by twenty classmates.**
 
-Read the designed edition at **[https://indo1919.github.io/whats-left/](https://indo1919.github.io/whats-left/)**.
+Visit **[https://indo1919.github.io/whats-left/](https://indo1919.github.io/whats-left/)**: sit at the seminar table, read the collection, or see the whole semester as data.
 
 A collection by Matias Indacochea for Project 3 of the Visual Culture Seminar, Parsons School of Design, fall 2026. Each selection lives in its own file in [`collection/`](collection/) and was added in its own commit, so the [commit history](https://github.com/Indo1919/whats-left/commits/main) is a record of every choice. The counts behind the charts are in [`data/`](data/).
 
 ## Framing essay
 
-All semester, I kept hearing versions of the same reassurance: AI can do most of the work now, so the designer’s job is to bring taste. Charitaa named it directly in Week 6, describing the idea that our role is to use “our good taste” and let the machine “handle the rest” (no. 10). The line is comforting because it suggests something stays ours. It also leaves a question this collection tries to answer. If a machine is making the choices, what exactly is taste attached to?
-
-My answer, built from my classmates’ micro-responses, is that taste is not a separate gift that sits above the work. It is made of choices, and it only exists in the choices a designer can make and explain. The readings said this before AI entered our conversation. Crystal chose Karel Martens’s line that “designing is making choices,” and that “each choice always shuts out other possibilities” (no. 01). Leila picked Rauno Freiberg’s point that explaining why something feels right is what “helps nurture taste” (no. 08). Yen tied this to a reminder from her professors to explain the “why” behind a decision instead of relying on intuition (no. 09). In these terms, taste is not a feeling about the result. It is the record of decisions you can stand behind.
-
-That is why Ted Chiang’s essay matters so much here. Twelve of my twenty classmates chose an excerpt from it. Chiang does not argue that AI output is ugly. He argues that a prompt holds only a few choices, so the model “has to fill in for all of the choices that you are not making,” as Simrin quoted (no. 15). Claire’s excerpt makes the same point about painting: an artist makes “far more decisions” than would fit in a prompt (no. 14). The risk for designers is not that AI makes bad work. The risk is that it makes many decisions we did not make, and the results look finished enough that we accept them as ours.
-
-My classmates did not respond by rejecting AI. Most of them described a line they are trying to hold. Andrea wrote that Jonathan Lee used AI for his slides but “was still the one making the creative decisions” (no. 16). Leila argued that we should “choose selectively what we are handing off versus what we are doing ourselves” (no. 17). Felix pointed out that once building becomes easy, the hard part is knowing what problem you are solving (no. 20). In each case the designer’s work moves to the edges of the process: earlier, to defining the problem and judging options, and later, to explaining why one option is right.
-
-The third part of the collection asks what happens when that line slips. Valerie gave the sharpest version. If a hundred-word prompt produces a four-thousand-word essay, “the opportunity for growth was robbed from you,” because “intelligence and taste grows through active authorship” (no. 23). Natay’s excerpt about bringing “a forklift into the weight room” makes the same point about practice (no. 24), and her own response worries that we will all end up with “the exact same surface-level understanding” (no. 25). There is a fair counterargument, and Andrea raised it: human artists also remix existing work, so it is not obvious where originality begins (no. 27). Our own pool supports her. Even with the same reading in front of us, we often picked the same lines: 60 of the 175 excerpts taken from a source repeat a passage that another classmate also chose. I think the difference is less about originality than about accountability. A designer can be asked why. A model cannot answer for the choices it filled in.
-
-Crystal’s Week 9 response explains why this line is hard to hold. The more normal AI becomes, she wrote, “the easier it is to stop questioning” it, and responsibility starts to feel “far removed, even though it’s still there” (no. 29). The micro-responses show how quickly that normalization happened in our own room. In the first four weeks, 5 of 163 micro-responses mentioned AI. From Week 6 to Week 9, 50 of 144 did. The material we excerpted moved the same way: in the first three weeks, 60 of 64 excerpts came from essays and books, and by Weeks 9 and 10, 27 of 29 came from writing about AI. Meanwhile the word “taste” appears in only 5 of all 357, while words like choice and decision appear in 57. My classmates talked about taste far less than the industry does, and about choices far more.
-
-The collection is ordered as an argument in three parts: making choices, handing them off, and what is left. I published it on GitHub because the platform takes a position on this question. Every change to this site is a commit with an author, a time, and a message, so each of the thirty selections is recorded as its own decision. A generated result carries no such record. What’s left for the designer, I think, is exactly that: the choices we can trace, explain, and claim as our own.
+_In progress._
 
 ## I. Making choices
 

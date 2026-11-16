@@ -32,42 +32,12 @@
   const itemTip = (it) =>
     `<strong>No. ${it.id}</strong>, ${esc(it.name)}, week ${it.week} ${it.type}<span class="tip-q"><mark>${esc(it.mark)}</mark></span>`;
 
-  /* ---------- Title: typed, offered a suggestion, the suggestion refused ---------- */
-  const live = document.querySelector(".title-live");
-  if (!reduceMotion && live) {
-    const typed = document.createElement("span");
-    const ghost = document.createElement("span");
-    ghost.className = "ghost";
-    const caret = document.createElement("span");
-    caret.className = "caret";
-    live.replaceChildren(typed, ghost, caret);
-    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
-    const type = async (s, speed) => { for (const ch of s) { typed.textContent += ch; await wait(speed + Math.random() * 40); } };
-    (async () => {
-      await wait(450);
-      await type("What’s left for the ", 46);
-      await wait(260);
-      ghost.textContent = "machine?";
-      const hint = document.createElement("span");
-      hint.className = "tab-hint";
-      hint.textContent = "Tab";
-      caret.after(hint);
-      await wait(1150);
-      ghost.textContent = "";
-      hint.remove();
-      await wait(240);
-      await type("designer?", 70);
-      caret.classList.add("is-done");
-      await wait(3100);
-      caret.remove();
-    })();
-  }
-
   /* =====================================================================
      The semester as a field: every micro-response is a line whose length
      follows its word count. Six layouts, blended by scroll position.
      ===================================================================== */
   const canvas = document.getElementById("field");
+  if (canvas) {
   const ctx = canvas.getContext("2d");
   const story = document.getElementById("story");
   const stepEls = [...document.querySelectorAll(".step")];
@@ -337,13 +307,13 @@
     if (p.s) return showTip(itemTip(ITEMS[pad2(p.s)]), e.clientX, e.clientY, true);
     const kind = p.t === "E" ? "excerpt" : "response";
     const extra = [p.t === "E" && p.k ? `from ${KIND_WORD[p.k]}` : "", p.ai ? "mentions AI" : "", p.p.length ? "repeats a passage someone else chose" : ""].filter(Boolean).join(", ");
-    showTip(`Week ${p.w} ${kind}, ${p.n} words${extra ? "<br>" + extra : ""}<br><span style="opacity:.6">Not in this collection</span>`, e.clientX, e.clientY, true);
+    showTip(`Week ${p.w} ${kind}, ${p.n} words${extra ? "<br>" + extra : ""}<br><span style="opacity:.6">Not in the collection</span>`, e.clientX, e.clientY, true);
   });
   canvas.addEventListener("pointerleave", () => { hideTip(); canvas.classList.remove("is-pointing"); });
   canvas.addEventListener("click", (e) => {
     const r = canvas.getBoundingClientRect();
     const i = hitAt(e.clientX - r.left, e.clientY - r.top);
-    if (i >= 0 && POOL[i].s) document.getElementById("item-" + pad2(POOL[i].s)).scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+    if (i >= 0 && POOL[i].s) location.href = "collection.html#item-" + pad2(POOL[i].s);
   });
 
   addEventListener("scroll", () => { schedule(); hideTip(); }, { passive: true });
@@ -356,12 +326,15 @@
   resize();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
 
+  }
+
   /* ---------- Search the collection (keyword in context) ---------- */
   const PRESETS = {
     choice: /\b(choic\w*|choos\w*|chose\w*)/gi, decision: /\b(decision\w*|decid\w*)/gi, taste: /\b(taste\w*)/gi,
     intention: /\b(intent\w*)/gi, control: /\b(control\w*)/gi, ai: /\b(A\.I\.|AI|Ai|ai)\b/g,
   };
   const q = document.getElementById("q");
+  if (q) {
   const kwic = document.getElementById("kwic");
   const kwicCount = document.getElementById("kwic-count");
   const chipsQ = [...document.querySelectorAll(".search-chips .chip")];
@@ -401,6 +374,8 @@
   chipsQ.forEach((c) => c.addEventListener("click", () => { q.value = c.dataset.q; runSearch(); }));
   runSearch();
 
+  }
+
   /* ---------- Essay references preview their selection ---------- */
   document.querySelectorAll(".ref").forEach((a) => {
     const it = ITEMS[a.dataset.ref];
@@ -413,55 +388,11 @@
     a.addEventListener("blur", hideTip);
   });
 
-  /* ---------- Wayfinding: top bar, active section, status bar ---------- */
-  const topbar = document.querySelector(".topbar");
-  const status = document.getElementById("status");
-  const statusL = document.getElementById("status-left");
-  const statusR = document.getElementById("status-right");
-  new IntersectionObserver(([e]) => topbar.classList.toggle("is-on", !e.isIntersecting), { threshold: 0 })
-    .observe(document.querySelector(".dek"));
-  const onStage = () => {
-    const r = story.getBoundingClientRect();
-    const dark = r.top <= 40 && r.bottom > 60;
-    topbar.classList.toggle("is-dark", dark);
-    status.classList.toggle("is-dark", r.top < innerHeight - 30 && r.bottom > innerHeight - 30);
-  };
-  addEventListener("scroll", onStage, { passive: true });
-  onStage();
-
-  const partTitle = Object.fromEntries(D.parts.map((p) => [p.num, p.title]));
-  const partAnchor = { I: "making-choices", II: "handing-them-off", III: "whats-left" };
-  const links = Object.fromEntries([...document.querySelectorAll(".topbar-links a")].map((a) => [a.getAttribute("href").slice(1), a]));
-  const setLink = (id) => Object.entries(links).forEach(([k, a]) => a.setAttribute("aria-current", k === id ? "true" : "false"));
-  const zones = {
-    top: () => [`${N} micro-responses by twenty classmates`, "30 selected"],
-    essay: () => ["Framing essay", `${document.querySelectorAll(".ref").length} references to the collection`],
-    search: () => ["Search the collection", "30 selections"],
-    data: () => ["The same lines, chosen again", "Notes on the data"],
-    record: () => ["The record", "30 commits, one per selection"],
-    sources: () => ["Sources and credits", "15 contributors"],
-  };
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (!e.isIntersecting) return;
-      const el = e.target;
-      if (el.classList.contains("item")) {
-        const it = ITEMS[el.dataset.id];
-        statusL.textContent = `Part ${it.part}, ${partTitle[it.part]}: ${it.name}, week ${it.week} ${it.type}`;
-        statusR.textContent = `Item ${it.id} of 30`;
-        setLink(partAnchor[it.part]);
-      } else if (el.classList.contains("step")) {
-        const i = +el.dataset.step;
-        statusL.textContent = `The semester, ${i + 1} of ${stepEls.length}`;
-        statusR.textContent = `${N} micro-responses`;
-        setLink("story");
-      } else if (el.classList.contains("part")) {
-        setLink(el.id);
-      } else if (zones[el.id]) {
-        const [l, r] = zones[el.id]();
-        statusL.textContent = l; statusR.textContent = r; setLink(el.id);
-      }
-    });
-  }, { rootMargin: "-45% 0px -50% 0px" });
-  document.querySelectorAll(".item, .part, .step, #top, #essay, #search, #data, #record, #sources").forEach((el) => io.observe(el));
+  /* ---------- Wayfinding: the nav turns solid once the page scrolls ---------- */
+  const nav = document.getElementById("nav");
+  if (nav) {
+    const onScroll = () => nav.classList.toggle("is-scrolled", scrollY > 8);
+    addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
 })();
