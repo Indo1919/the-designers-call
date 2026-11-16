@@ -73,3 +73,38 @@
 .g-seat:hover { text-decoration: underline; }
 .page-collection .nav.is-scrolled { box-shadow: 0 1px 0 var(--n-line); }
 .essay--pending .para p.placeholder::first-letter { float: none; font: inherit; color: inherit; margin: 0; padding: 0; initial-letter: normal; }
+
+/* ---------- the argument, on the collection page ---------- */
+.argue { max-width: 1180px; padding: 0 var(--pad, 24px) clamp(40px, 6vw, 72px); font-family: var(--sans); }
+.argue-h { font-family: var(--sans); font-weight: 400; font-size: 15px; color: var(--muted); margin: 0 0 10px; }
+.argue-thesis { font-family: var(--serif); font-size: clamp(26px, 3.2vw, 40px); line-height: 1.18; letter-spacing: -0.01em; margin: 0 0 18px; max-width: 30ch; text-wrap: balance; color: var(--ink); }
+.argue-context { font-size: 17px; line-height: 1.6; color: var(--muted); max-width: 68ch; margin: 0 0 28px; }
+.argue-parts { list-style: none; margin: 0 0 22px; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.argue-parts a { display: grid; gap: 6px; height: 100%; padding: 16px 18px 18px; border-radius: 16px; border: 1px solid var(--rule); border-top: 4px solid var(--pc); background: var(--wash); color: var(--ink); text-decoration: none; }
+.argue-parts a:hover { border-color: var(--muted); border-top-color: var(--pc); }
+.ap-n { font-family: var(--mono); font-size: 12px; color: var(--pc); font-weight: 500; }
+.ap-t { font-size: 17px; font-weight: 500; }
+.ap-c { font-family: var(--serif); font-size: 17px; line-height: 1.42; }
+.ap-l { font-size: 13.5px; color: var(--muted); line-height: 1.45; }
+.ap-k { font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 4px; }
+.argue-order { font-size: 15px; line-height: 1.6; color: var(--muted); max-width: 72ch; margin: 0 0 28px; }
+.stances h3 { font-size: 17px; font-weight: 500; margin: 0 0 4px; }
+.stances > p { font-size: 14px; color: var(--muted); margin: 0 0 12px; }
+.stances ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.stances li { display: grid; grid-template-columns: minmax(200px, 300px) 1fr; gap: 6px 18px; align-items: baseline; border-top: 1px solid var(--rule); padding-top: 10px; }
+.st-l { margin: 0; font-size: 15px; font-weight: 500; }
+.st-n { margin: 0; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.st-c { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-right: 6px; }
+.st-n a { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 4px 10px 4px 8px; border-radius: 999px; border: 1px solid var(--rule); color: var(--ink); text-decoration: none; }
+.st-n a::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--pc); }
+.part .part-num { color: var(--pc); }
+.part-claim { font-family: var(--serif); font-size: clamp(19px, 1.8vw, 23px); line-height: 1.4; margin: 0 0 12px; border-left: 3px solid var(--pc); padding-left: 14px; max-width: 46ch; }
+.item .gutter { border-top: 3px solid var(--pc); padding-top: 10px; }
+.item .g-num { color: var(--pc); }
+.item-note .why { font-family: var(--sans); font-size: 14.5px; line-height: 1.5; color: var(--ink); border-left: 2px solid var(--pc); padding-left: 10px; margin: 0 0 16px; }
+.item-note .why span, .cite-h { display: block; font-family: var(--sans); font-size: 12px; color: var(--muted); margin-bottom: 3px; }
+.coll-toc a span { color: var(--pc, var(--muted)); border-color: var(--pc, var(--rule)); }
+@media (max-width: 860px) {
+  .argue-parts { grid-template-columns: 1fr; }
+  .stances li { grid-template-columns: 1fr; }
+}

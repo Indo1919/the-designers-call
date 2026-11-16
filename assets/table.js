@@ -242,6 +242,7 @@ function screenTexture() {
     for (let i = 0; i < 10; i++) g.fillRect(124 + i * 128, 640, 96, 96 * (0.25 + (i % 4) * 0.22));
   });
 }
+const PAPER_W = 0.21, PAPER_H = 0.297;
 /* ------------------------------------------------------------------ the room */
 const TABLE = { L: 8.2, W: 2.6, H: 0.75, T: 0.045 };
 const TOP_Y = TABLE.H;
@@ -255,6 +256,21 @@ const screen = new THREE.Mesh(new THREE.PlaneGeometry(3.4, 1.91), new THREE.Mesh
 screen.position.set(-6.86, 2.05, 0); screen.rotation.y = Math.PI / 2; scene.add(screen);
 const screenFrame = new THREE.Mesh(new THREE.BoxGeometry(0.03, 2.0, 3.5), new THREE.MeshStandardMaterial({ color: "#0c0e11", roughness: 0.6 }));
 screenFrame.position.set(-6.885, 2.05, 0); scene.add(screenFrame);
+const BRAND_RED = "#e3262f";
+const redWall = new THREE.Mesh(new THREE.PlaneGeometry(11.5, 4.6), env(new THREE.MeshStandardMaterial({ color: BRAND_RED, roughness: 0.88 }), 0.15));
+redWall.position.set(-6.897, 2.3, 0); redWall.rotation.y = Math.PI / 2; redWall.receiveShadow = true; scene.add(redWall);
+function signTexture() {
+  return canvasTex(1400, 520, (g, w, h) => {
+    g.clearRect(0, 0, w, h);
+    g.fillStyle = "#ffffff"; g.font = `500 112px ${SANS}`; g.fillText("Parsons", 8, 150);
+    g.font = `500 112px ${SANS}`; g.fillText("School of Design", 8, 280);
+    g.globalAlpha = 0.85; g.font = `400 54px ${SANS}`; g.fillText("Visual Culture Seminar, fall 2026", 12, 420);
+  });
+}
+const sign = new THREE.Mesh(new THREE.PlaneGeometry(2.9, 1.08), new THREE.MeshBasicMaterial({ map: signTexture(), transparent: true, toneMapped: false, opacity: 0.94 }));
+sign.position.set(-6.885, 2.0, -3.75); sign.rotation.y = Math.PI / 2; scene.add(sign);
+const wash = new THREE.SpotLight("#fff1e0", 70, 0, 1.0, 0.9, 2);
+wash.position.set(-3.6, 4.4, 0); wash.target.position.set(-6.9, 2.2, -1.2); scene.add(wash, wash.target);
 
 // table top: a long slab with rounded corners
 {
@@ -294,6 +310,8 @@ const SIDE_Z = 1.78, FRONT_X = -4.62;
 D.sideA.forEach((name, i) => SEATS.push({ name, side: "A", x: SIDE_X(i), z: SIDE_Z, yaw: Math.PI }));      // faces -z
 D.sideB.forEach((name, i) => SEATS.push({ name, side: "B", x: SIDE_X(i), z: -SIDE_Z, yaw: 0 }));           // faces +z
 D.front.forEach((f, i) => SEATS.push({ name: f.name, role: f.role, side: "F", x: FRONT_X, z: -0.96 + i * 0.64, yaw: Math.PI / 2 })); // faces +x
+const FOOT_X = 4.62;
+SEATS.push({ name: D.curator.name, role: D.curator.role, side: "C", x: FOOT_X, z: 0, yaw: -Math.PI / 2 }); // the curator, at the foot, faces the screen
 SEATS.forEach((s) => {
   s.dir = new THREE.Vector3(Math.sin(s.yaw), 0, Math.cos(s.yaw));
   if (s.name) SEAT[s.name] = s;
@@ -301,7 +319,8 @@ SEATS.forEach((s) => {
   s.answeredBy = ITEMS.filter((it) => (it.answers || []).includes(s.name));
 });
 // ring order for previous / next
-const RING = [...D.front.map((f) => f.name), ...D.sideA.filter(Boolean), ...[...D.sideB].reverse().filter(Boolean)];
+const RING = [D.curator.name, ...D.front.map((f) => f.name), ...D.sideA.filter(Boolean), ...[...D.sideB].reverse().filter(Boolean)];
+const MEN = new Set(D.men);
 
 const SHIRTS = ["#4a6fa5", "#c76b4a", "#5b8c6b", "#8a6bb0", "#d4a24c", "#3f7f8c", "#b05a7a", "#6d7a8a", "#a0603a", "#4f5b9c", "#7a9a4a", "#c05050", "#5a8aa0", "#9a7a5a", "#6a5aa0"];
 const chairSeat = env(new THREE.MeshStandardMaterial({ color: "#2b2f36", roughness: 0.85 }), 0.2);
@@ -373,6 +392,23 @@ const CARD = (() => {
   ]);
 })();
 
+/* hair: the women and men of the seminar, told apart the simple way */
+const HAIR_COLORS = ["#2a1c15", "#3a2a20", "#1b1613", "#4e3322", "#5e3f2a", "#231d19", "#6b3a24", "#33241b"].map((c) => env(new THREE.MeshStandardMaterial({ color: c, roughness: 0.72, side: THREE.DoubleSide }), 0.25));
+const ghostHair = new THREE.MeshStandardMaterial({ color: "#9aa4af", roughness: 0.5, transparent: true, opacity: 0.12, depthWrite: false, side: THREE.DoubleSide });
+function cap(r = 0.146, len = 0.56, tilt = -0.3) { const g = new THREE.SphereGeometry(r, 32, 14, 0, Math.PI * 2, 0, Math.PI * len); g.rotateX(tilt); return g; }
+function shell(phiS, phiL, thS, thL, sy, ty, r = 0.153) { const g = new THREE.SphereGeometry(r, 28, 14, phiS, phiL, Math.PI * thS, Math.PI * thL); g.scale(1, sy, 1); g.translate(0, ty, 0); return g; }
+const HAIR = {
+  long: merge([cap(), shell(Math.PI * 0.86, Math.PI * 1.28, 0.32, 0.5, 2.0, -0.08)]),
+  bob: merge([cap(), shell(Math.PI * 0.78, Math.PI * 1.44, 0.3, 0.42, 1.25, -0.03)]),
+  bun: merge([cap(0.146, 0.6, -0.36), xf(new THREE.SphereGeometry(0.066, 18, 12), [0, 0.105, -0.115])]),
+  pony: merge([cap(0.146, 0.6, -0.36), xf(new THREE.SphereGeometry(0.046, 14, 10), [0, 0.055, -0.145]), xf(new THREE.CapsuleGeometry(0.036, 0.15, 4, 10), [0, -0.065, -0.168], [0.22, 0, 0])]),
+  wave: merge([cap(0.149, 0.58, -0.28), shell(Math.PI * 0.9, Math.PI * 1.2, 0.32, 0.52, 1.75, -0.06, 0.162)]),
+  short: cap(0.143, 0.5, -0.34),
+  crop: merge([cap(0.143, 0.5, -0.34), xf(new THREE.SphereGeometry(0.075, 16, 10), [0, 0.105, 0.045], [0, 0, 0], [1.1, 0.42, 1])]),
+};
+const WOMEN_STYLES = ["long", "bob", "bun", "pony", "wave"], MEN_STYLES = ["short", "crop"];
+const hashName = (n) => [...n].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
+
 function place(obj, s, forward, up = 0, side = 0) {
   // local coords relative to a seat: forward = toward the table
   const right = new THREE.Vector3(Math.cos(s.yaw), 0, -Math.sin(s.yaw));
@@ -380,7 +416,12 @@ function place(obj, s, forward, up = 0, side = 0) {
 }
 
 const pickables = [];
-let shirtIdx = 0;
+let shirtIdx = 0, ghostCount = 0;
+function cardSub(s) {
+  if (s.side === "C") return "curator, 30 of " + D.N;
+  if (s.side === "F") return s.answeredBy.length ? `${s.answeredBy.length} answered` : s.role;
+  return `${s.items.length} ${s.items.length === 1 ? "entry" : "entries"}`;
+}
 const chairM = { seat: [], back: [], leg: [] }, legM = { named: [], ghost: [] };
 const tmpG = new THREE.Group(), tmpC = new THREE.Object3D();
 function collect(list, s, forward, local) {
@@ -399,12 +440,21 @@ SEATS.forEach((s, si) => {
   });
 
   const person = new THREE.Group();
-  const shirt = named ? env(new THREE.MeshStandardMaterial({ color: s.side === "F" ? "#2d323b" : SHIRTS[shirtIdx++ % SHIRTS.length], roughness: 0.78 }), 0.3) : ghostMat;
+  const shirt = named ? env(new THREE.MeshStandardMaterial({ color: s.side === "F" ? "#2d323b" : s.side === "C" ? "#1e2633" : SHIRTS[shirtIdx++ % SHIRTS.length], roughness: 0.78 }), 0.3) : ghostMat;
   const body = new THREE.Mesh(BODY, shirt);
   const hands = new THREE.Mesh(HANDS, named ? plainHead : ghostMat);
   const headG = new THREE.Group(); headG.position.set(0, 1.27, 0.02);
   const head = new THREE.Mesh(G.head, named ? headMat : ghostMat);
   headG.add(head);
+  {
+    const man = named ? MEN.has(s.name) : ghostCount++ === 0;   // one of the five unnamed classmates is a man
+    const h = named ? hashName(s.name) : si * 7;
+    const style = man ? MEN_STYLES[h % MEN_STYLES.length] : WOMEN_STYLES[h % WOMEN_STYLES.length];
+    const hair = new THREE.Mesh(HAIR[style], named ? HAIR_COLORS[h % HAIR_COLORS.length] : ghostHair);
+    hair.position.y = 0.004;
+    if (named) { hair.castShadow = true; hair.userData = { kind: "seat", name: s.name }; pickables.push(hair); }
+    headG.add(hair);
+  }
   person.add(body, hands, headG);
   if (named) [body, head].forEach((m) => { m.castShadow = true; m.receiveShadow = true; });
   place(person, s, 0); person.rotation.y = s.yaw;
@@ -415,11 +465,11 @@ SEATS.forEach((s, si) => {
     s.eye = new THREE.Vector3(); s.eye.copy(person.position).add(new THREE.Vector3(0, 1.3, 0)).addScaledVector(s.dir, 0.06);
 
     // name card: a folded tent card facing the room
-    const sub = s.side === "F" ? (s.answeredBy.length ? `${s.answeredBy.length} answered` : s.role) : `${s.items.length} ${s.items.length === 1 ? "entry" : "entries"}`;
+    const sub = cardSub(s);
     const cardMat = env(new THREE.MeshStandardMaterial({ map: nameCardTexture(s.name, sub), roughness: 0.7 }), 0.4);
     const tent = new THREE.Mesh(CARD, cardMat);
     tent.userData = { kind: "seat", name: s.name }; pickables.push(tent); tent.castShadow = true;
-    place(tent, s, 0.56, TOP_Y + 0.002, s.side === "F" ? 0 : 0.27); tent.rotation.y = s.yaw;
+    place(tent, s, 0.56, TOP_Y + 0.002, s.side === "F" || s.side === "C" ? 0 : 0.27); tent.rotation.y = s.yaw;
     scene.add(tent); s.card = tent;
   }
 });
@@ -434,6 +484,23 @@ instanced(G.leg, chairMetal, chairM.leg, false);
 instanced(G.thigh, pantsMat, legM.named, false);
 instanced(G.thigh, ghostMat, legM.ghost, false);
 
+function collectionTopTexture() {
+  return canvasTex(420, 594, (g, w, h) => {
+    g.fillStyle = "#fbfaf6"; g.fillRect(0, 0, w, h);
+    g.fillStyle = "#e3262f"; g.fillRect(36, 44, 54, 8);
+    g.fillStyle = "#1f2328"; g.font = `400 46px ${SERIF}`; g.fillText("The", 36, 128); g.fillText("Designer’s Call", 36, 182);
+    g.fillStyle = "#59636e"; g.font = `400 24px ${SANS}`; g.fillText(`30 chosen from ${D.N}`, 38, 232);
+    [["I", "#3b8bff"], ["II", "#aab3bd"], ["III", "#3fb950"]].forEach(([n, c], i) => { g.fillStyle = c; g.fillRect(38, 290 + i * 46, 140, 12); g.fillStyle = "#59636e"; g.font = `500 20px ${MONO}`; g.fillText(n, 192, 302 + i * 46); });
+  });
+}
+const CUR = SEAT[D.curator.name];
+const curStack = new THREE.Mesh(new THREE.BoxGeometry(PAPER_W, 30 * 0.0026, PAPER_H), [0, 0, 0, 0, 0, 0].map((_, i) => i === 2
+  ? env(new THREE.MeshStandardMaterial({ map: collectionTopTexture(), roughness: 0.9 }), 0.35)
+  : env(new THREE.MeshStandardMaterial({ map: edgeTex, color: "#e8e3d8", roughness: 0.95 }), 0.25)));
+place(curStack, CUR, 0.78, TOP_Y + 0.039, -0.05); curStack.rotation.y = CUR.yaw + Math.PI;
+curStack.castShadow = true; curStack.receiveShadow = true;
+curStack.userData = { kind: "collection" }; pickables.push(curStack); scene.add(curStack);
+
 /* ------------------------------------------------------------------ sheets of paper */
 const PAPER = { w: 0.21, h: 0.297 };
 const paperGeo = new THREE.PlaneGeometry(PAPER.w, PAPER.h);
@@ -443,6 +510,7 @@ Object.values(SEAT).forEach((s) => {
   const k = s.items.length;
   s.items.forEach((it, j) => {
     const g = new THREE.Group();
+    g.rotation.order = "YXZ";   // so a sheet tilts toward its writer, whichever side they sit on
     const r = rng(parseInt(it.id, 10) * 97);
     const mat = env(new THREE.MeshStandardMaterial({ map: paperTexture(it), roughness: 0.92, transparent: true }), 0.35);
     const m = new THREE.Mesh(paperGeo, mat); m.rotation.x = -Math.PI / 2; m.receiveShadow = true; m.castShadow = true;
@@ -575,11 +643,12 @@ const seatEl = $("seat"), seatBody = $("seat-body");
 function sit(name, { instant = false } = {}) {
   const s = SEAT[name];
   if (!s) return;
+  if (tourIdx >= 0) endTour(true);
   closeReader();
   if (current && current !== s) showPerson(current, true);
   current = s;
   look.yaw = look.yawT = 0;
-  look.pitch = look.pitchT = isNarrow() ? (s.side === "F" ? -0.04 : -0.13) : (s.side === "F" ? -0.12 : -0.3);
+  look.pitch = look.pitchT = isNarrow() ? (s.side === "A" || s.side === "B" ? -0.13 : -0.04) : (s.side === "A" || s.side === "B" ? -0.3 : -0.12);
   shiftT = 1;
   const fov = isNarrow() ? 64 : 58;
   const target = seatLookTarget(s, 0, look.pitch);
@@ -627,7 +696,12 @@ function step(dir) {
 function partChip(p) { return `<span class="pc" style="--c:${PART[p].color}">${p}. ${esc(PART[p].title)}</span>`; }
 function renderSeatPanel(s) {
   let h = "";
-  if (s.side === "F") {
+  if (s.side === "C") {
+    h += `<p class="seat-kicker">The curator’s seat</p><h2>${esc(s.name)}</h2>
+      <p class="seat-sub">Matias chose these thirty from ${D.N} and put them in order. From here you can see every seat at the table and the wall at Parsons where the class met.</p>
+      <p class="seat-thesis">${esc(D.thesis)}</p>
+      <div class="card-act"><button data-act="tour">Walk through the argument</button></div>`;
+  } else if (s.side === "F") {
     h += `<p class="seat-kicker">${esc(s.role)}</p><h2>${esc(s.name)}</h2>`;
     if (s.answeredBy.length) {
       h += `<p class="seat-sub">${s.answeredBy.length} ${s.answeredBy.length === 1 ? "response" : "responses"} in the collection answer ${esc(s.name.split(" ")[0])}. From here you can see who wrote them.</p><ol class="seat-list">`;
@@ -658,7 +732,8 @@ function renderSeatPanel(s) {
 seatBody.addEventListener("click", (e) => {
   const b = e.target.closest("button"); if (!b) return;
   const a = b.dataset.act;
-  if (a === "read") openReader(b.dataset.id);
+  if (a === "tour") startTour(0);
+  else if (a === "read") openReader(b.dataset.id);
   else if (a === "sit") sit(b.dataset.name);
   else if (a === "face") lookAtPoint(headPos(b.dataset.name));
   else if (a === "reading") lookAtPoint(READ[b.dataset.key].pos);
@@ -669,6 +744,12 @@ $("seat-prev").addEventListener("click", () => step(-1));
 $("seat-next").addEventListener("click", () => step(1));
 addEventListener("keydown", (e) => {
   if ($("reader").open) return;
+  if (tourIdx >= 0) {
+    if (e.key === "Escape") endTour();
+    else if (e.key === "ArrowRight") goStep(tourIdx + 1);
+    else if (e.key === "ArrowLeft") goStep(tourIdx - 1);
+    return;
+  }
   if (mode !== "seat" && mode !== "fly") return;
   if (e.key === "Escape") standUp();
   else if (e.key === "ArrowRight") step(1);
@@ -697,8 +778,9 @@ reader.addEventListener("click", (e) => {
 });
 
 /* ------------------------------------------------------------------ lenses */
-let lens = "people";
-let partOn = null;
+let lens = "argument";
+let partOn = null;     // a part singled out on the table
+let hlId = null;       // a selection singled out on the table
 let week = 10;
 const lensBtns = [...document.querySelectorAll(".lens button")];
 const lensDetails = [...document.querySelectorAll(".ld")];
@@ -707,7 +789,7 @@ function setLens(k) {
   lensBtns.forEach((b) => b.setAttribute("aria-selected", b.dataset.lens === k ? "true" : "false"));
   lensDetails.forEach((d) => d.classList.toggle("is-on", d.dataset.for === k));
   if (k !== "weeks") { setWeek(10, false); stopPlay(); }
-  if (k !== "parts") setPart(null);
+  if (k !== "argument") { partOn = null; hlId = null; }
   setLensThreads();
 }
 lensBtns.forEach((b) => b.addEventListener("click", () => setLens(b.dataset.lens)));
@@ -717,15 +799,168 @@ function setLensThreads(hoverName) {
     if (current) on = t.from === current.name;
     if (hoverName && lens === "threads") on = t.from === hoverName || t.to === hoverName;
     if (lens === "weeks" && t.it.week > week) on = false;
-    t.aT = on ? 1 : (lens === "threads" && !current ? 0.07 : 0);
+    if (tourIdx >= 0) { const st = STEPS[tourIdx]; on = !!(st.it && t.it.id === st.it.id); }
+    t.aT = on ? 1 : (lens === "threads" && !current && tourIdx < 0 ? 0.07 : 0);
   });
 }
-// parts
-document.querySelectorAll(".pchip").forEach((b) => b.addEventListener("click", () => setPart(partOn === b.dataset.part ? null : b.dataset.part)));
-function setPart(p) {
-  partOn = p;
-  document.querySelectorAll(".pchip").forEach((b) => b.setAttribute("aria-pressed", b.dataset.part === p ? "true" : "false"));
+
+/* ------------------------------------------------------------------ the argument: rail and walk-through */
+const PARTS = D.parts.map((p) => ({ ...p, items: ITEMS.filter((i) => i.part === p.num) }));
+const STEPS = [{ kind: "intro" }];
+PARTS.forEach((p) => { STEPS.push({ kind: "part", part: p.num }); p.items.forEach((it) => STEPS.push({ kind: "item", it, part: p.num })); });
+STEPS.push({ kind: "close" });
+const stepOfItem = (id) => STEPS.findIndex((st) => st.it && st.it.id === id);
+const stepOfPart = (n) => STEPS.findIndex((st) => st.kind === "part" && st.part === n);
+let tourIdx = -1;
+
+// the rail: thirty ticks in three colored parts, in the order of the argument
+const rail = $("rail");
+rail.innerHTML = `<div class="rail-parts">${PARTS.map((p) => `
+  <div class="rseg" style="--c:${p.color};flex:${p.items.length}" data-part="${p.num}">
+    <button class="rseg-h" data-part="${p.num}"><span class="rseg-n">${p.num}</span><span class="rseg-t">${esc(p.title)}</span></button>
+    <div class="rseg-ticks">${p.items.map((it) => `<button class="tk tk--${it.type}" data-id="${it.id}" aria-label="No. ${it.id}, ${esc(it.name)}, ${it.type === "excerpt" ? "excerpt" : "commentary"}"><span>${it.id}</span></button>`).join("")}</div>
+  </div>`).join("")}</div>
+  <div class="rail-foot"><span class="lgi"><span class="lg lg--e"></span>Excerpt, with full citation</span><span class="lgi"><span class="lg lg--r"></span>Response, credited by first name</span><span class="rail-o">Ordered as an argument in three parts</span></div>`;
+function railTip(el, html) {
+  const r = room.getBoundingClientRect(), b = el.getBoundingClientRect();
+  tip.innerHTML = html; tip.hidden = false;
+  const tr = tip.getBoundingClientRect();
+  const x = clamp(b.left - r.left + b.width / 2 - tr.width / 2, 12, r.width - tr.width - 12);
+  tip.style.transform = `translate(${x}px,${b.top - r.top - tr.height - 12}px)`;
 }
+rail.querySelectorAll(".tk").forEach((b) => {
+  const it = byId[b.dataset.id];
+  b.addEventListener("pointerenter", () => { hlId = it.id; hoverSeat = SEAT[it.name]; railTip(b, `<b>No. ${it.id}, ${esc(it.name)}</b><span>${it.type === "excerpt" ? "Excerpt, week " + it.week : "Commentary, week " + it.week}</span><q>${esc(it.mark)}</q><em>Click to walk through from here</em>`); });
+  b.addEventListener("pointerleave", () => { hlId = null; hoverSeat = null; tip.hidden = true; });
+  b.addEventListener("focus", () => { hlId = it.id; });
+  b.addEventListener("blur", () => { hlId = null; });
+  b.addEventListener("click", () => startTour(stepOfItem(it.id)));
+});
+rail.querySelectorAll(".rseg-h").forEach((b) => {
+  const p = PART[b.dataset.part];
+  b.addEventListener("pointerenter", () => { partOn = p.num; railTip(b, `<b>${p.num}. ${esc(p.title)}</b><span>${esc(D.claims[p.num])}</span><em>Click to start this part</em>`); });
+  b.addEventListener("pointerleave", () => { partOn = null; tip.hidden = true; });
+  b.addEventListener("click", () => startTour(stepOfPart(p.num)));
+});
+document.querySelectorAll(".tchip").forEach((b) => {
+  b.addEventListener("click", () => startTour(stepOfPart(b.dataset.part)));
+  b.addEventListener("pointerenter", () => { partOn = b.dataset.part; });
+  b.addEventListener("pointerleave", () => { partOn = null; });
+});
+$("start").addEventListener("click", () => startTour(0));
+
+// the walk-through
+const tourEl = $("tour"), tourBody = $("tour-body"), tourProg = $("tour-progress");
+tourProg.innerHTML = PARTS.map((p) => `<div class="tp" style="--c:${p.color};flex:${p.items.length}">${p.items.map((it) => `<button class="tp-s" data-id="${it.id}" aria-label="No. ${it.id}"></button>`).join("")}</div>`).join("");
+tourProg.addEventListener("click", (e) => { const b = e.target.closest(".tp-s"); if (b) goStep(stepOfItem(b.dataset.id)); });
+
+function markText(it) {
+  const ms = it.text.indexOf(it.mark);
+  return ms >= 0 ? esc(it.text.slice(0, ms)) + `<mark>${esc(it.mark)}</mark>` + esc(it.text.slice(ms + it.mark.length)) : esc(it.text);
+}
+function legendRows() {
+  return `<ol class="legend">${PARTS.map((p) => `<li style="--c:${p.color}"><button data-go="${stepOfPart(p.num)}"><span class="lg-n">${p.num}</span><span class="lg-t">${esc(p.title)}</span><span class="lg-c">${esc(D.claims[p.num])}</span><span class="lg-m">${esc(D.legend[p.num])}</span></button></li>`).join("")}</ol>`;
+}
+function renderStep(st) {
+  let h = "";
+  if (st.kind === "intro") {
+    h = `<p class="t-kicker">The argument</p><h2 class="t-h">The Designer’s Call</h2><p class="t-thesis">${esc(D.thesis)}</p>
+      <p class="t-p">${esc(D.context)}</p>${legendRows()}
+      <p class="t-count">30 selections: 15 excerpts with their full citations and 15 responses credited by first name, ordered in three parts.</p>
+      <div class="t-act"><button class="primary" data-go="1">Begin with part I</button></div>`;
+  } else if (st.kind === "part") {
+    const p = PARTS.find((x) => x.num === st.part);
+    const ne = p.items.filter((i) => i.type === "excerpt").length;
+    h = `<p class="t-part" style="--c:${p.color}"><span>${p.num}</span>Part ${p.num} of III</p><h2 class="t-h">${esc(p.title)}</h2>
+      <p class="t-thesis t-thesis--part" style="--c:${p.color}">${esc(D.claims[p.num])}</p><p class="t-p">${esc(p.intro)}</p>
+      <p class="t-count">${ne} excerpts and ${p.items.length - ne} responses, nos. ${p.items[0].id} to ${p.items[p.items.length - 1].id}</p>
+      <ol class="t-list">${p.items.map((it) => `<li><button data-go="${stepOfItem(it.id)}" style="--c:${p.color}"><span class="tl-n tl-n--${it.type}">${it.id}</span><span class="tl-who">${esc(it.name)}<em>${it.type === "excerpt" ? "excerpt" : "commentary"}</em></span><span class="tl-q">${esc(it.mark)}</span></button></li>`).join("")}</ol>`;
+  } else if (st.kind === "item") {
+    const it = st.it, p = PART[it.part];
+    const credit = it.type === "excerpt"
+      ? `<div class="t-credit"><p class="tc-h">Excerpt chosen by ${esc(it.name)}, week ${it.week}</p><p class="tc-l">Full citation</p><p class="tc-cite">${esc(it.cite)}</p></div>`
+      : `<div class="t-credit"><p class="tc-h">Commentary by ${esc(it.name)}, week ${it.week}</p><p class="tc-l">Responding to ${esc(it.to)}</p>${it.ctx ? `<p class="tc-ctx">${esc(it.name)}’s note on what was said: ${esc(it.ctx)}</p>` : ""}</div>`;
+    h = `<p class="t-part" style="--c:${p.color}"><span>${p.num}</span>${esc(p.title)}<b>No. ${it.id} of 30</b></p>
+      <p class="t-why" style="--c:${p.color}">${esc(D.notes[it.id])}</p>
+      <blockquote class="t-text t-text--${it.type}" style="--c:${p.color}">${markText(it)}</blockquote>${credit}
+      <div class="t-act"><button data-sit="${esc(it.name)}">Sit in ${esc(it.name)}’s seat</button><a href="collection.html#item-${it.id}">Open in the collection</a></div>`;
+  } else {
+    h = `<p class="t-kicker">The call</p><h2 class="t-h">The call stays ours</h2><p class="t-thesis">${esc(D.thesis)}</p>
+      <div class="t-stances"><p class="t-sh">How classmates see it</p><p class="t-p">The fifteen responses, grouped by the position they take.</p>
+      ${D.stances.map(([lbl, ids]) => `<div class="ts"><p class="ts-l">${esc(lbl)}<span>${ids.length} of 15</span></p><p class="ts-ids">${ids.map((id) => `<button data-go="${stepOfItem(id)}" style="--c:${PART[byId[id].part].color}">${id} ${esc(byId[id].name)}</button>`).join("")}</p></div>`).join("")}</div>
+      <div class="t-act"><a class="primary" href="collection.html#essay">Read the essay</a><a href="collection.html">Read the collection</a><button data-exit>Explore the table</button></div>`;
+  }
+  tourBody.innerHTML = h;
+  tourBody.scrollTop = 0;
+  tourProg.querySelectorAll(".tp-s").forEach((b) => {
+    const k = stepOfItem(b.dataset.id);
+    b.classList.toggle("is-on", st.it && b.dataset.id === st.it.id);
+    b.classList.toggle("is-done", k < tourIdx);
+  });
+}
+tourBody.addEventListener("click", (e) => {
+  const g = e.target.closest("[data-go]"); if (g) return goStep(+g.dataset.go);
+  const s2 = e.target.closest("[data-sit]"); if (s2) { endTour(true); return sit(s2.dataset.sit); }
+  if (e.target.closest("[data-exit]")) endTour();
+});
+function partCentroid(n) {
+  const v = new THREE.Vector3(); const its = ITEMS.filter((i) => i.part === n);
+  its.forEach((i) => v.add(i._sheet.home)); return v.multiplyScalar(1 / its.length);
+}
+function shotFor(st) {
+  const narrow = isNarrow();
+  if (st.kind === "intro") return { pos: new THREE.Vector3(FOOT_X + 1.3, 2.35, 0.9), look: new THREE.Vector3(-2.6, 0.95, -0.2), fov: narrow ? 64 : 50 };
+  if (st.kind === "close") { const o = overviewPose(); return { pos: o.pos.clone(), look: o.look.clone(), fov: o.fov + 4 }; }
+  if (st.kind === "part") {
+    const c = partCentroid(st.part);
+    return { pos: new THREE.Vector3(c.x * 0.5 + 2.4, narrow ? 7.4 : 5.4, narrow ? 7.2 : 5.9), look: new THREE.Vector3(c.x * 0.7, 0.55, 0), fov: narrow ? 56 : 42 };
+  }
+  const it = st.it, s2 = SEAT[it.name], sh = it._sheet;
+  const right = new THREE.Vector3(Math.cos(s2.yaw), 0, -Math.sin(s2.yaw));
+  const pos = s2.person.position.clone().add(new THREE.Vector3(0, 1.72, 0)).addScaledVector(s2.dir, -0.08).addScaledVector(right, 0.62);
+  return { pos, look: sh.home.clone().add(new THREE.Vector3(0, 0.14, 0)), fov: narrow ? 62 : 46 };
+}
+function startTour(i) {
+  if (current) { showPerson(current, true); current = null; seatEl.hidden = true; room.classList.remove("is-seated"); markPicker(null); }
+  closeReader();
+  if (lens !== "argument") setLens("argument");
+  room.classList.add("is-touring");
+  tourEl.hidden = false;
+  shiftT = 1;
+  goStep(i);
+}
+function goStep(i) {
+  i = clamp(i, 0, STEPS.length - 1);
+  tourIdx = i;
+  const st = STEPS[i];
+  partOn = st.part || null;
+  hlId = st.it ? st.it.id : null;
+  renderStep(st);
+  const shot = shotFor(st);
+  startFly(shot.pos, shot.look, shot.fov, mode === "tour" ? 1400 : 1900, () => { mode = "tour"; });
+  history.replaceState(null, "", "#argument-" + i);
+  setLensThreads();
+}
+function endTour(silent) {
+  if (tourIdx < 0) return;
+  tourIdx = -1; partOn = null; hlId = null;
+  room.classList.remove("is-touring");
+  tourEl.hidden = true;
+  setLensThreads();
+  if (silent) return;
+  shiftT = 0;
+  history.replaceState(null, "", location.pathname + location.search);
+  const o = overviewPose();
+  startFly(o.pos, o.look, o.fov, 1700, () => { mode = "orbit"; controls.target.copy(o.look); controls.enabled = true; });
+}
+$("tour-exit").addEventListener("click", () => endTour());
+$("tour-prev").addEventListener("click", () => goStep(tourIdx - 1));
+$("tour-next").addEventListener("click", () => goStep(tourIdx + 1));
+
+// seats button opens the plan
+const seatsBtn = $("seats-btn"), picker = $("picker");
+seatsBtn.addEventListener("click", () => { const open = picker.hidden; picker.hidden = !open; seatsBtn.setAttribute("aria-expanded", open ? "true" : "false"); });
+
 // weeks
 const wkIn = $("wk"), wkOut = $("wk-out"), wkCap = $("wk-cap");
 function setWeek(w, animate = true) {
@@ -788,8 +1023,10 @@ function pick(e) {
   return hits.length ? hits[0].object.userData : null;
 }
 function tipFor(u) {
+  if (u.kind === "collection") return `<b>The collection</b><span>30 chosen from ${D.N}, ordered as an argument in three parts.</span><em>Click to walk through the argument</em>`;
   if (u.kind === "seat") {
     const s = SEAT[u.name];
+    if (s.side === "C") return `<b>${esc(s.name)}</b><span>Curator. Chose these thirty and set them in order.</span><em>Click to see the table from the curator’s seat</em>`;
     if (s.side === "F") return `<b>${esc(s.name)}</b><span>${esc(s.role)}${s.answeredBy.length ? `. ${s.answeredBy.length} ${s.answeredBy.length === 1 ? "response answers" : "responses answer"} them` : ""}</span><em>Click to see the room from here</em>`;
     return `<b>${esc(s.name)}</b><span>${s.items.length} ${s.items.length === 1 ? "entry" : "entries"}: ${s.items.map((i) => "no. " + i.id).join(", ")}</span><em>Click to sit in this seat</em>`;
   }
@@ -811,7 +1048,7 @@ canvas.addEventListener("pointermove", (e) => {
   if (isTouch && !down) return;
   const u = pick(e);
   hover = u;
-  canvas.style.cursor = u && (u.kind === "seat" || u.kind === "sheet") ? "pointer" : (mode === "seat" ? "grab" : "default");
+  canvas.style.cursor = u && (u.kind === "seat" || u.kind === "sheet" || u.kind === "collection") ? "pointer" : (mode === "seat" ? "grab" : "default");
   const name = u && u.kind === "seat" ? u.name : u && u.kind === "sheet" ? byId[u.id].name : null;
   if ((hoverSeat && hoverSeat.name) !== name) { hoverSeat = name ? SEAT[name] : null; setLensThreads(name || undefined); }
   if (u && !down) {
@@ -830,7 +1067,8 @@ canvas.addEventListener("pointerup", (e) => {
   if (!u) return;
   tip.hidden = true;
   if (u.kind === "seat") sit(u.name);
-  else if (u.kind === "sheet") openReader(u.id);
+  else if (u.kind === "collection") startTour(0);
+  else if (u.kind === "sheet") { if (tourIdx >= 0) goStep(stepOfItem(u.id)); else openReader(u.id); }
 });
 canvas.addEventListener("pointerleave", () => { tip.hidden = true; if (!down) { hoverSeat = null; setLensThreads(); } });
 
@@ -891,9 +1129,12 @@ function update(now, dt) {
   // sheets: visibility, lift, parts, flight from the stacks
   SHEETS.forEach((sh) => {
     sh.vis += (sh.visT - sh.vis) * Math.min(1, dt * 5);
-    const partLift = lens === "parts" && partOn === sh.it.part ? 1 : 0;
+    const argOn = lens === "argument" || tourIdx >= 0;
+    const isHl = hlId === sh.it.id;
+    const touring = tourIdx >= 0 && isHl;
+    const partLift = argOn && partOn === sh.it.part && !hlId ? 1.6 : 0;
     const hov = hover && hover.kind === "sheet" && hover.id === sh.it.id ? 1 : 0;
-    const want = Math.max(sh.liftT, partLift * 4, hov * 0.5);
+    const want = Math.max(sh.liftT, partLift, hov * 0.5, touring ? 2.6 : isHl ? 2 : 0);
     sh.lift += (want - sh.lift) * Math.min(1, dt * 7);
     let pos = sh.home;
     if (sh.fly) {
@@ -907,11 +1148,12 @@ function update(now, dt) {
     }
     sh.g.position.set(pos.x, pos.y + sh.lift * 0.06, pos.z);
     sh.g.rotation.y = sh.homeRot;
-    sh.g.rotation.x = Math.min(sh.lift, 1) * -0.08;
-    const dim = lens === "parts" && partOn && partOn !== sh.it.part ? 0.25 : 1;
+    sh.tilt = (sh.tilt || 0) + (((touring ? 0.55 : 0) - (sh.tilt || 0)) * Math.min(1, dt * 5));
+    sh.g.rotation.x = sh.tilt;
+    const dim = argOn && ((hlId && !isHl && tourIdx >= 0) ? sh.it.part !== partOn : (partOn && partOn !== sh.it.part)) ? 0.28 : 1;
     sh.mat.opacity = sh.vis * dim;
     sh.g.visible = sh.vis > 0.02;
-    const bWant = lens === "parts" ? (partOn && partOn !== sh.it.part ? 0.15 : 0.95) : 0;
+    const bWant = argOn ? (partOn && partOn !== sh.it.part ? 0.12 : isHl ? 1 : 0.85) : 0;
     sh.bmat.opacity += (bWant * sh.vis - sh.bmat.opacity) * Math.min(1, dt * 6);
     sh.bmat.visible = sh.bmat.opacity > 0.01;
   });
@@ -957,12 +1199,13 @@ async function fontsReady() {
   await fontsReady();
   SHEETS.forEach((sh) => { sh.mat.map.dispose(); sh.mat.map = paperTexture(sh.it); sh.mat.needsUpdate = true; });
   Object.values(SEAT).forEach((s) => {
-    const sub = s.side === "F" ? (s.answeredBy.length ? `${s.answeredBy.length} answered` : s.role) : `${s.items.length} ${s.items.length === 1 ? "entry" : "entries"}`;
-    s.card.material.map = nameCardTexture(s.name, sub); s.card.material.needsUpdate = true;
+    s.card.material.map = nameCardTexture(s.name, cardSub(s)); s.card.material.needsUpdate = true;
   });
   STACKS.forEach((st) => { st.m.material[2].map = stackTopTexture(st.wk); st.m.material[2].needsUpdate = true; });
   Object.values(READ).forEach((r) => { const m = r.g.children[2].material; m.map = packetTexture(r.rd); m.needsUpdate = true; });
   screen.material.map = screenTexture(); screen.material.needsUpdate = true;
+  sign.material.map = signTexture(); sign.material.needsUpdate = true;
+  curStack.material[2].map = collectionTopTexture(); curStack.material[2].needsUpdate = true;
 
   setWeek(10, false);
   const o = overviewPose();
@@ -973,6 +1216,8 @@ async function fontsReady() {
   room.classList.add("is-ready");
   loop();
   if (target) { mode = "orbit"; sit(target); return; }
+  const arg = (location.hash.match(/^#argument-(\d+)$/) || [])[1];
+  if (arg != null) { mode = "orbit"; startTour(+arg); return; }
   if (reduceMotion) { camera.position.copy(o.pos); baseFov = o.fov; applyView(); controls.target.copy(o.look); mode = "orbit"; controls.update(); return; }
   startFly(o.pos, o.look, o.fov, 2800, () => { mode = "orbit"; controls.target.copy(o.look); controls.enabled = true; });
 })();
@@ -988,6 +1233,8 @@ addEventListener("hashchange", () => {
 window.WL = {
   sit: (n) => { room.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" }); setTimeout(() => sit(n), reduceMotion ? 0 : 450); },
   read: openReader,
+  tour: (i = 0) => { room.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" }); setTimeout(() => startTour(i), reduceMotion ? 0 : 450); },
+  tourItem: (id) => { room.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" }); setTimeout(() => startTour(stepOfItem(id)), reduceMotion ? 0 : 450); },
   seats: Object.keys(SEAT),
 };
 document.dispatchEvent(new CustomEvent("wl-ready"));

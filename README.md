@@ -12,7 +12,7 @@ _In progress._
 
 ## I. Making choices
 
-Before any tool, design is a run of decisions, and each one closes off others. The readings say it first; the room starts testing it against AI.
+Before any tool, design is a run of decisions. The readings and the room agree that taste shows in the reasons behind them, not in a good eye alone.
 
 - [01. Excerpt, Crystal, week 2](collection/01-crystal-week-2-excerpt.md)
 - [02. Response, Crystal, week 2](collection/02-crystal-week-2-response.md)
@@ -27,7 +27,7 @@ Before any tool, design is a run of decisions, and each one closes off others. T
 
 ## II. Handing them off
 
-A prompt is a handful of choices. The model fills in the rest. Here the class works out which decisions to give away and which to keep.
+A prompt is a handful of choices and the model fills in the rest. Here the class works out how to use AI as a tool without giving away the decisions.
 
 - [11. Excerpt, Hannah, week 9](collection/11-hannah-week-9-excerpt.md)
 - [12. Excerpt, Fan, week 10](collection/12-fan-week-10-excerpt.md)
@@ -43,7 +43,7 @@ A prompt is a handful of choices. The model fills in the rest. Here the class wo
 
 ## III. What’s left
 
-What disappears when the struggle does, and what still belongs to the person making the work.
+What still belongs to the person making the work, and where classmates draw the line before a designer loses credibility.
 
 - [22. Excerpt, Valerie, week 9](collection/22-valerie-week-9-excerpt.md)
 - [23. Response, Valerie, week 9](collection/23-valerie-week-9-response.md)
