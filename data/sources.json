@@ -1,0 +1,251 @@
+{
+ "kinds": {
+  "essay": "Essays and books",
+  "explainer": "Talks, explainers and guidelines",
+  "launch": "Product launches, demos and reviews",
+  "ai": "Writing about AI",
+  "own": "Own reflection"
+ },
+ "weeks": {
+  "1": {
+   "essay": 19,
+   "own": 2
+  },
+  "2": {
+   "essay": 23
+  },
+  "3": {
+   "essay": 18,
+   "explainer": 1,
+   "own": 1
+  },
+  "4": {
+   "explainer": 17,
+   "essay": 4
+  },
+  "5": {
+   "explainer": 13,
+   "essay": 7,
+   "launch": 1
+  },
+  "6": {
+   "launch": 19,
+   "own": 1
+  },
+  "7": {
+   "explainer": 2,
+   "launch": 15,
+   "essay": 1
+  },
+  "8": {
+   "own": 10,
+   "explainer": 1,
+   "essay": 4,
+   "launch": 2,
+   "ai": 1
+  },
+  "9": {
+   "ai": 18,
+   "own": 1
+  },
+  "10": {
+   "ai": 9,
+   "own": 1
+  }
+ },
+ "excerpts": 191,
+ "repeated": 60,
+ "clusters": 42,
+ "top": [
+  {
+   "n": 4,
+   "src": "Octavia E. Butler, “A Few Rules for Predicting the Future”",
+   "passage": "They may be too slight to matter or they may be worth the risk because the potential benefits are great"
+  },
+  {
+   "n": 4,
+   "src": "Kenya Hara, “What Is Design?”",
+   "passage": "The sensibility that allows one to rediscover the unknown in the familiar is equally creative"
+  },
+  {
+   "n": 4,
+   "src": "Erika Hall, “A Design Research Framework”",
+   "passage": "Design is the application of intention and you are only as intentional as you are informed"
+  },
+  {
+   "n": 3,
+   "src": "Octavia E. Butler, “A Few Rules for Predicting the Future”",
+   "passage": "Because most of all our tomorrow is the child of our today Through thought and deed we exert a great deal of influence over this child even though we can’t control it absolutely Best to think about it though Best to try to shape it into something good Best to do that for any child"
+  },
+  {
+   "n": 3,
+   "src": "Octavia E. Butler, “A Few Rules for Predicting the Future”",
+   "passage": "use our past and present behaviors as guides to the kind of world we seem to be creating The past for example is filled with repeating cycles of strength and weakness wisdom and stupidity empire and ashes"
+  },
+  {
+   "n": 3,
+   "src": "Octavia E. Butler, “A Few Rules for Predicting the Future”",
+   "passage": "In fact I don’t believe we can do anything at all without side effects also known as unintended consequences Those consequences may be beneficial or harmful They may be too slight to matter"
+  },
+  {
+   "n": 3,
+   "src": "Phoebe Yu, “Japanese Web Design” (video explainer)",
+   "passage": "The Japanese user often measures convenience by the amount of inconvenience they avoid causing to others rather than solely the time or effort saved for themselves"
+  },
+  {
+   "n": 3,
+   "src": "Kenya Hara, “What Is Design?”",
+   "passage": "the designer should see the import of the job and be alert to those to whom it is directed to come to the right choices"
+  }
+ ],
+ "sources": [
+  [
+   "Octavia E. Butler, “A Few Rules for Predicting the Future”",
+   22
+  ],
+  [
+   "Own reflection or notes",
+   16
+  ],
+  [
+   "Ted Chiang, “Why A.I. Isn’t Going to Make Art”",
+   13
+  ],
+  [
+   "Friend, reveal trailer",
+   11
+  ],
+  [
+   "Phoebe Yu, “Japanese Web Design” (video explainer)",
+   11
+  ],
+  [
+   "Erika Hall, “A Design Research Framework”",
+   9
+  ],
+  [
+   "Kenya Hara, “What Is Design?”",
+   9
+  ],
+  [
+   "“The Norman Door” (video explainer)",
+   8
+  ],
+  [
+   "Karel Martens, “What Design Means for Me”",
+   8
+  ],
+  [
+   "Ursula K. Le Guin, “Telling Is Listening”",
+   8
+  ],
+  [
+   "Steve Jobs introduces the iPhone (2007)",
+   7
+  ],
+  [
+   "Colomina and Wigley, Are We Human?",
+   6
+  ],
+  [
+   "Meta glasses demos",
+   6
+  ],
+  [
+   "Apple, Human Interface Guidelines",
+   6
+  ],
+  [
+   "Maciej Cegłowski, “Web Design: The First 100 Years”",
+   6
+  ],
+  [
+   "“Metaphors We Live By” (video explainer)",
+   5
+  ],
+  [
+   "James Bridle, Ways of Being",
+   4
+  ],
+  [
+   "Rauno Freiberg, “Invisible Details of Interaction Design”",
+   3
+  ],
+  [
+   "OpenAI, “Introducing dots”",
+   3
+  ],
+  [
+   "METR reports on AI risk",
+   3
+  ],
+  [
+   "Vals AI evaluations",
+   3
+  ],
+  [
+   "Sally Woellner, “Dark Patterns” (TEDx talk)",
+   2
+  ],
+  [
+   "Even Realities, “The Big Dance”",
+   2
+  ],
+  [
+   "Google, Material Design",
+   2
+  ],
+  [
+   "Olia Lialina, “Once Again, The Doorknob”",
+   2
+  ],
+  [
+   "Meta, “Introducing Muse”",
+   2
+  ],
+  [
+   "Knapp, Zeratsky and Kowitz, Sprint",
+   2
+  ],
+  [
+   "Blaise Agüera y Arcas, What Is Intelligence?",
+   2
+  ],
+  [
+   "Kate Crawford, Atlas of AI",
+   2
+  ],
+  [
+   "Marques Brownlee, Humane pin review",
+   1
+  ],
+  [
+   "Andy Warhol paints on an Amiga (1985)",
+   1
+  ],
+  [
+   "Video link (unlabelled)",
+   1
+  ],
+  [
+   "“GPT-6 Astra” demo video",
+   1
+  ],
+  [
+   "“I bought a friend” (Friend pin review)",
+   1
+  ],
+  [
+   "Google, “Project Glass: One Day”",
+   1
+  ],
+  [
+   "Ruben Pater, The Politics of Design",
+   1
+  ],
+  [
+   "Priyanka Desai, “My AI Agent Is Making Me Lamer”",
+   1
+  ]
+ ]
+}
