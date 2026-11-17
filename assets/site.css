@@ -129,3 +129,10 @@
 .mr-text { font-family: var(--serif); font-size: 17px; line-height: 1.6; margin: 0; padding: 0 14px 10px; max-width: 68ch; }
 .mr-cite { font-size: 13px; color: var(--muted); margin: 0; padding: 0 14px 12px; }
 @media (max-width: 640px) { .mine-rows summary { grid-template-columns: auto 1fr; } .mr-q { grid-column: 1 / -1; } }
+.page-essay .coll { padding-top: var(--nav-h); }
+.essay-page .essay { border-top: 0; padding-top: 0; }
+.essay-next { max-width: 1180px; padding: 0 var(--pad, 24px) 80px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; font-family: var(--sans); }
+.essay-next a { display: grid; gap: 4px; padding: 18px 20px; border: 1px solid var(--rule); border-radius: 16px; background: var(--wash); color: var(--muted); text-decoration: none; font-size: 14px; }
+.essay-next a span { color: var(--ink); font-size: 17px; font-weight: 500; }
+.essay-next a:hover { border-color: var(--muted); }
+@media (max-width: 640px) { .essay-next { grid-template-columns: 1fr; } .nav-tabs a { padding: 8px 9px; font-size: 13px; } }

@@ -902,7 +902,7 @@ function renderStep(st) {
     h = `<p class="t-kicker">The call</p><h2 class="t-h">The call stays ours</h2><p class="t-thesis">${esc(D.thesis)}</p>
       <div class="t-stances"><p class="t-sh">How classmates see it</p><p class="t-p">The fifteen responses, grouped by the position they take.</p>
       ${D.stances.map(([lbl, ids]) => `<div class="ts"><p class="ts-l">${esc(lbl)}<span>${ids.length} of 15</span></p><p class="ts-ids">${ids.map((id) => `<button data-go="${stepOfItem(id)}" style="--c:${PART[byId[id].part].color}">${id} ${esc(byId[id].name)}</button>`).join("")}</p></div>`).join("")}</div>
-      <div class="t-act"><a class="primary" href="collection.html#essay">Read the essay</a><a href="collection.html">Read the collection</a><button data-exit>Explore the table</button></div>`;
+      <div class="t-act"><a class="primary" href="essay.html">Read the essay</a><a href="collection.html">Read the collection</a><button data-exit>Explore the table</button></div>`;
   }
   tourBody.innerHTML = h;
   tourBody.scrollTop = 0;
