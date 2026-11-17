@@ -108,3 +108,24 @@
   .argue-parts { grid-template-columns: 1fr; }
   .stances li { grid-template-columns: 1fr; }
 }
+
+/* ---------- lighter reading ---------- */
+.item.is-long:not(.is-open) .item-main blockquote { max-height: 9.6em; overflow: hidden;
+  -webkit-mask-image: linear-gradient(#000 60%, transparent); mask-image: linear-gradient(#000 60%, transparent); }
+.item .more { font-family: var(--sans); font-size: 13px; color: var(--blue); background: none; border: 1px solid var(--rule); border-radius: 999px; padding: 6px 12px; cursor: pointer; margin-top: 4px; }
+.item .more:hover { border-color: var(--blue); }
+.ctx { margin-top: 8px; font-family: var(--sans); font-size: 13.5px; color: var(--muted); }
+.ctx summary { cursor: pointer; color: var(--blue); }
+.ctx p { margin: 6px 0 0; line-height: 1.5; }
+.mine { padding: clamp(56px, 8vw, 96px) var(--pad, 24px); max-width: 1180px; }
+.mine-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-family: var(--sans); }
+.mine-rows details { border: 1px solid var(--rule); border-left: 3px solid #e3262f; border-radius: 12px; background: var(--wash); }
+.mine-rows summary { cursor: pointer; padding: 11px 14px; display: grid; grid-template-columns: 70px 74px 1fr; gap: 10px; align-items: baseline; list-style: none; }
+.mine-rows summary::-webkit-details-marker { display: none; }
+.mr-w { font-size: 13px; font-weight: 500; }
+.mr-t { font-size: 12.5px; color: var(--muted); }
+.mr-q { font-family: var(--serif); font-size: 15px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mine-rows details[open] .mr-q { white-space: normal; color: var(--muted); }
+.mr-text { font-family: var(--serif); font-size: 17px; line-height: 1.6; margin: 0; padding: 0 14px 10px; max-width: 68ch; }
+.mr-cite { font-size: 13px; color: var(--muted); margin: 0; padding: 0 14px 12px; }
+@media (max-width: 640px) { .mine-rows summary { grid-template-columns: auto 1fr; } .mr-q { grid-column: 1 / -1; } }

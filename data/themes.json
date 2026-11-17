@@ -31,7 +31,13 @@
      "05"
     ]
    }
-  ]
+  ],
+  "mine": {
+   "id": "m03",
+   "week": 2,
+   "type": "excerpt",
+   "quote": "we are all designers and makers of the forms in which things present themselves to us"
+  }
  },
  {
   "key": "taste",
@@ -59,7 +65,13 @@
      "21"
     ]
    }
-  ]
+  ],
+  "mine": {
+   "id": "m09",
+   "week": 4,
+   "type": "response",
+   "quote": "I should have prioritized my time to solve bigger problems and dig deeper"
+  }
  },
  {
   "key": "handoff",
@@ -89,7 +101,13 @@
      "06"
     ]
    }
-  ]
+  ],
+  "mine": {
+   "id": "m16",
+   "week": 8,
+   "type": "response",
+   "quote": "I felt anxiety that I had lost control on what it was and was not deleting"
+  }
  },
  {
   "key": "gaps",
@@ -119,7 +137,13 @@
      "19"
     ]
    }
-  ]
+  ],
+  "mine": {
+   "id": "m04",
+   "week": 2,
+   "type": "response",
+   "quote": "a step above a high-fidelity prototype but live for people to access"
+  }
  },
  {
   "key": "growth",
@@ -147,7 +171,13 @@
      "25"
     ]
    }
-  ]
+  ],
+  "mine": {
+   "id": "m12",
+   "week": 6,
+   "type": "response",
+   "quote": "I am very new to the coding world and have been learning a lot and pushing myself"
+  }
  },
  {
   "key": "ours",
@@ -186,6 +216,12 @@
      "30"
     ]
    }
-  ]
+  ],
+  "mine": {
+   "id": "m19",
+   "week": 9,
+   "type": "response",
+   "quote": "what do we actually own? is everything rented now?"
+  }
  }
 ]

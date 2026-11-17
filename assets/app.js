@@ -388,6 +388,14 @@
     a.addEventListener("blur", hideTip);
   });
 
+  /* ---------- Long entries fold until asked ---------- */
+  document.querySelectorAll(".item .more").forEach((b) => b.addEventListener("click", () => {
+    const art = b.closest(".item"), open = !art.classList.contains("is-open");
+    art.classList.toggle("is-open", open); b.setAttribute("aria-expanded", open);
+    b.textContent = open ? "Show less" : b.dataset.label || b.textContent;
+    if (!b.dataset.label && open) b.dataset.label = "Read all " + art.querySelector("blockquote").textContent.trim().split(/\s+/).length + " words";
+  }));
+
   /* ---------- Wayfinding: the nav turns solid once the page scrolls ---------- */
   const nav = document.getElementById("nav");
   if (nav) {

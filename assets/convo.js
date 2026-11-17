@@ -15,6 +15,7 @@
   const mapCap = document.getElementById("th-map-cap");
   const weeksSvg = document.getElementById("th-weeks");
 
+  COLOR.Matias = "#e3262f";
   const sit = (n) => (window.WL ? window.WL.sit(n) : (location.hash = "#seat-" + n.toLowerCase().replace(/\s+/g, "-")));
   const read = (id) => (window.WL ? window.WL.read(id) : (location.href = "collection.html#item-" + id));
 
@@ -31,11 +32,16 @@
       }).join("");
       return `<div class="view" style="animation-delay:${vi * 70}ms"><p class="view-label">${esc(v.label)}</p><div class="voices">${voices}</div></div>`;
     }).join("");
-    panel.innerHTML = `<h3 class="q">${esc(theme.question)}</h3><p class="reading">${esc(theme.reading)}</p><div class="views">${views}</div>`;
+    const m = theme.mine;
+    const mine = m ? `<div class="view" style="animation-delay:${theme.views.length * 70}ms"><p class="view-label">Where I stand</p><div class="voices"><div class="voice voice--mine">
+      <span class="avatar" aria-hidden="true">M</span><div><span class="mine-tag">The curator’s own entry, not part of the thirty</span><p class="voice-q">${esc(m.quote)}</p>
+      <p class="voice-by"><span>Matias, week ${m.week} ${m.type}</span><button data-mine="${m.id}">Read it</button><button data-sit="Matias">Sit in Matias’s seat</button></p></div></div></div></div>` : "";
+    panel.innerHTML = `<h3 class="q">${esc(theme.question)}</h3><p class="reading">${esc(theme.reading)}</p><div class="views">${views}${mine}</div>`;
 
     // who spoke, on the seat plan
     const ids = theme.views.flatMap((v) => v.ids);
     const people = new Set(ids.map((id) => byId[id].name));
+    if (theme.mine) people.add("Matias");
     mapSeats.forEach((g) => {
       const on = people.has(g.dataset.name);
       g.classList.toggle("is-lit", on);
@@ -75,6 +81,7 @@
   });
   panel.addEventListener("click", (e) => {
     const r = e.target.closest("[data-read]"); if (r) return read(r.dataset.read);
+    const mm = e.target.closest("[data-mine]"); if (mm) return window.WL && window.WL.readMine(mm.dataset.mine);
     const s = e.target.closest("[data-sit]"); if (s) return sit(s.dataset.sit);
   });
   mapSeats.forEach((g) => {

@@ -460,6 +460,7 @@ SEATS.forEach((s, si) => {
   place(person, s, 0); person.rotation.y = s.yaw;
   scene.add(person);
   Object.assign(s, { person, torso: body, headG, head, arms: [], hands: [hands], shirt, phase: si * 0.77, headYaw: 0 });
+  if (!named) [body, head].forEach((m) => { m.userData = { kind: "ghost" }; pickables.push(m); });
   if (named) {
     [body, head].forEach((m) => { m.userData = { kind: "seat", name: s.name }; pickables.push(m); });
     s.eye = new THREE.Vector3(); s.eye.copy(person.position).add(new THREE.Vector3(0, 1.3, 0)).addScaledVector(s.dir, 0.06);
@@ -700,7 +701,10 @@ function renderSeatPanel(s) {
     h += `<p class="seat-kicker">The curator’s seat</p><h2>${esc(s.name)}</h2>
       <p class="seat-sub">Matias chose these thirty from ${D.N} and put them in order. From here you can see every seat at the table and the wall at Parsons where the class met.</p>
       <p class="seat-thesis">${esc(D.thesis)}</p>
-      <div class="card-act"><button data-act="tour">Walk through the argument</button></div>`;
+      <div class="card-act"><button data-act="tour">Walk through the argument</button></div>
+      <h3 class="seat-h3">My own micro-responses</h3>
+      <p class="seat-sub">${D.mine.length} entries from weeks ${D.mine[0].week} to ${D.mine[D.mine.length - 1].week}. The assignment draws the thirty only from classmates, so these sit beside the collection, not in it.</p>
+      <ol class="mine-list">${D.mine.map((m) => `<li><button data-act="mine" data-id="${m.id}"><span class="mn-w">Week ${m.week}</span><span class="mn-t">${m.type === "excerpt" ? "Excerpt" : "Response"}</span><span class="mn-q">${esc(m.text.slice(0, 96))}${m.text.length > 96 ? "…" : ""}</span></button></li>`).join("")}</ol>`;
   } else if (s.side === "F") {
     h += `<p class="seat-kicker">${esc(s.role)}</p><h2>${esc(s.name)}</h2>`;
     if (s.answeredBy.length) {
@@ -733,6 +737,7 @@ seatBody.addEventListener("click", (e) => {
   const b = e.target.closest("button"); if (!b) return;
   const a = b.dataset.act;
   if (a === "tour") startTour(0);
+  else if (a === "mine") openMine(b.dataset.id);
   else if (a === "read") openReader(b.dataset.id);
   else if (a === "sit") sit(b.dataset.name);
   else if (a === "face") lookAtPoint(headPos(b.dataset.name));
@@ -768,6 +773,15 @@ function openReader(id) {
   readerIn.innerHTML = `<p class="r-meta">${partChip(it.part)}<span>No. ${it.id} of 30</span><span>Chosen from ${it.chosenFrom} ${it.type === "excerpt" ? "excerpts" : "responses"} that week</span></p>
     <blockquote class="r-text r-text--${it.type}">${body}</blockquote>${foot}
     <div class="r-act">${current && current.name === it.name ? "" : `<button data-act="sit" data-name="${esc(it.name)}">Sit in ${esc(it.name)}’s seat</button>`}<a href="collection.html#item-${it.id}">Open in the collection</a></div>`;
+  if (!reader.open) reader.showModal();
+}
+function openMine(id) {
+  const m = D.mine.find((x) => x.id === id);
+  const foot = m.type === "excerpt"
+    ? `<p class="r-cite">${esc(m.cite)}</p><p class="r-by">Excerpt chosen by Matias, week ${m.week}, before class.</p>`
+    : `<p class="r-by">Matias, week ${m.week}, after class.${m.to ? ` Responding to ${esc(m.to)}.` : ""}</p>`;
+  readerIn.innerHTML = `<p class="r-meta"><span class="pc" style="--c:#e3262f">The curator’s own entry</span><span>Not part of the thirty</span></p>
+    <blockquote class="r-text r-text--${m.type}">${esc(m.text)}</blockquote>${foot}`;
   if (!reader.open) reader.showModal();
 }
 function closeReader() { if (reader.open) reader.close(); }
@@ -1023,6 +1037,7 @@ function pick(e) {
   return hits.length ? hits[0].object.userData : null;
 }
 function tipFor(u) {
+  if (u.kind === "ghost") return `<b>A classmate without an entry here</b><span>Everyone in the seminar wrote micro-responses, but only thirty were chosen, and none of this person’s made the cut. Their entries still count in the ${D.N}, shown as data without names or text to keep them private.</span><em>Click to see all ${D.N} entries on the Semester page</em>`;
   if (u.kind === "collection") return `<b>The collection</b><span>30 chosen from ${D.N}, ordered as an argument in three parts.</span><em>Click to walk through the argument</em>`;
   if (u.kind === "seat") {
     const s = SEAT[u.name];
@@ -1048,7 +1063,7 @@ canvas.addEventListener("pointermove", (e) => {
   if (isTouch && !down) return;
   const u = pick(e);
   hover = u;
-  canvas.style.cursor = u && (u.kind === "seat" || u.kind === "sheet" || u.kind === "collection") ? "pointer" : (mode === "seat" ? "grab" : "default");
+  canvas.style.cursor = u && (u.kind === "seat" || u.kind === "sheet" || u.kind === "collection" || u.kind === "ghost") ? "pointer" : (mode === "seat" ? "grab" : "default");
   const name = u && u.kind === "seat" ? u.name : u && u.kind === "sheet" ? byId[u.id].name : null;
   if ((hoverSeat && hoverSeat.name) !== name) { hoverSeat = name ? SEAT[name] : null; setLensThreads(name || undefined); }
   if (u && !down) {
@@ -1067,6 +1082,7 @@ canvas.addEventListener("pointerup", (e) => {
   if (!u) return;
   tip.hidden = true;
   if (u.kind === "seat") sit(u.name);
+  else if (u.kind === "ghost") location.href = "semester.html#story";
   else if (u.kind === "collection") startTour(0);
   else if (u.kind === "sheet") { if (tourIdx >= 0) goStep(stepOfItem(u.id)); else openReader(u.id); }
 });
@@ -1233,6 +1249,7 @@ addEventListener("hashchange", () => {
 window.WL = {
   sit: (n) => { room.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" }); setTimeout(() => sit(n), reduceMotion ? 0 : 450); },
   read: openReader,
+  readMine: openMine,
   tour: (i = 0) => { room.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" }); setTimeout(() => startTour(i), reduceMotion ? 0 : 450); },
   tourItem: (id) => { room.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" }); setTimeout(() => startTour(stepOfItem(id)), reduceMotion ? 0 : 450); },
   seats: Object.keys(SEAT),
