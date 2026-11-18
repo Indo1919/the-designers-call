@@ -2,9 +2,9 @@
 
 **Taste, choice, and AI in thirty micro-responses, chosen from 357 written by twenty classmates.**
 
-Visit **[https://indo1919.github.io/whats-left/](https://indo1919.github.io/whats-left/)**: sit at the seminar table, read the collection, or see the whole semester as data.
+Visit **[https://indo1919.github.io/the-designers-call/](https://indo1919.github.io/the-designers-call/)**: sit at the seminar table, read the collection, or see the whole semester as data.
 
-A collection by Matias Indacochea for Project 3 of the Visual Culture Seminar, Parsons School of Design, fall 2026. Each selection lives in its own file in [`collection/`](collection/) and was added in its own commit, so the [commit history](https://github.com/Indo1919/whats-left/commits/main) is a record of every choice. The counts behind the charts are in [`data/`](data/).
+A collection by Matias Indacochea for Project 3 of the Visual Culture Seminar, Parsons School of Design, fall 2026. Each selection lives in its own file in [`collection/`](collection/) and was added in its own commit, so the [commit history](https://github.com/Indo1919/the-designers-call/commits/main) is a record of every choice. The counts behind the charts are in [`data/`](data/).
 
 ## The Designer’s Call (framing essay)
 
